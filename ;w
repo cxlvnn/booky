@@ -1,0 +1,15 @@
+<x-layout>
+<div class="flex item-center justify-center w-9xl">
+    <form>
+        <label class="label text-lg mb-2 block">Bookmark Type</label>
+        <input class="input mb-5 w-1/2" type="text" name="type" placeholder="e.x. YoutubeVideos">
+
+        <label class="label text-lg mb-2 block">Bookmark Name</label>
+        <input class="input mb-5" type="text" name="name" placeholder="e.x. Must watch videos">
+
+        <label class="label text-lg mb-2 block">Bookmark URL</label>
+        <input class="input mb-5" type="text" name="url" placeholder="e.x. https://example.com"/>
+
+    </form>
+</div>
+</x-layout>
