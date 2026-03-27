@@ -49,5 +49,12 @@
             <button class="mt-5 btn" type="submit">Edit</button>
         </div>
     </form>
+        <div>
+            <form method="POST" action="/bookmarks/{{$bookmark->id}}">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Delete</button>
+            </form>
+        </div>
 </div>
 </x-layout>

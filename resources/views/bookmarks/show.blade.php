@@ -19,7 +19,7 @@
                                 Edit
                             </a>
                             </button>
-                            <form method="POST" action="/bookmarks/type/{{$bookmark->id}}">
+                            <form method="POST" action="/bookmarks/{{$bookmark->id}}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-xs btn-error">

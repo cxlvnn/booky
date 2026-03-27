@@ -89,7 +89,12 @@ class BookmarkController extends Controller
     public function destroy(Bookmark $bookmark)
     {
         $bookmark->delete();
+        $type_exists = Bookmark::where('type', $bookmark->type)->exists();
 
-        return redirect("/bookmarks/$bookmark->type");
+        if ($type_exists) {
+            return redirect("/bookmarks/$bookmark->type");
+        }
+
+        return redirect('/');
     }
 }
