@@ -26,6 +26,12 @@
         </ul>
     </div>
 @else
-    <p class="text-lg text-center">You have no bookmarks. <a class="underline hover:text-blue-600" href="/bookmarks/create">Create one</a></p>
+    <p class="text-lg text-center">You have no bookmarks.
+        <a
+        class="link link-primary"
+        href="/bookmarks/create">
+            Create one
+        </a>
+    </p>
 @endif
 </x-layout>

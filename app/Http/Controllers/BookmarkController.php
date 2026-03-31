@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BookmarkStoreRequest;
 use App\Models\Bookmark;
+use App\Policies\BookmarkPolicy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class BookmarkController extends Controller
 {
@@ -13,7 +16,8 @@ class BookmarkController extends Controller
      */
     public function index()
     {
-        $types = Bookmark::pluck('type')->toArray();
+        $types = Bookmark::pluck('type');
+        $types = Bookmark::where(['user_id' => Auth::id()])->pluck('type')->toArray();
         $types = array_unique($types);
         return view('bookmarks.index', [
             'types' =>  $types
@@ -25,7 +29,7 @@ class BookmarkController extends Controller
      */
     public function create()
     {
-        $types = Bookmark::get()->pluck('type');
+        $types = Bookmark::where('user_id', Auth::user()->id)->get()->pluck('type');
         return view('bookmarks.create', [
             'types' => $types
         ]);
@@ -36,13 +40,13 @@ class BookmarkController extends Controller
      */
     public function store(BookmarkStoreRequest $request)
     {
-        Bookmark::create([
+        Auth::user()->bookmarks()->create([
             'type' => request('type'),
             'name' => request('name'),
             'url' => request('url')
         ]);
 
-        return (redirect('/'));
+        return (redirect('/bookmarks'));
     }
 
     /**
@@ -50,10 +54,11 @@ class BookmarkController extends Controller
      */
     public function show($type)
     {
-        $specific_bookmark = Bookmark::where('type', $type)->get();
+        $bookmarks = Bookmark::where('type', $type)->where('user_id', Auth::user()->id)->get();
+        Gate::authorize('viewOrModify', $bookmarks[0]);
 
         return view('bookmarks.show', [
-            'bookmarks' => $specific_bookmark
+            'bookmarks' => $bookmarks
         ]);
     }
 
@@ -62,6 +67,7 @@ class BookmarkController extends Controller
      */
     public function edit(Bookmark $bookmark)
     {
+        Gate::authorize('viewOrModify', $bookmark);
         $types = Bookmark::pluck('type');
         return view('bookmarks.edit', [
             'bookmark' => $bookmark,
@@ -75,6 +81,7 @@ class BookmarkController extends Controller
     public function update(BookmarkStoreRequest $request, $id)
     {
         $bookmark = Bookmark::findOrFail($id);
+        Gate::authorize('viewOrModify', $bookmark);
         $bookmark->type = $request->type;
         $bookmark->name = $request->name;
         $bookmark->url = $request->url;
@@ -88,6 +95,7 @@ class BookmarkController extends Controller
      */
     public function destroy(Bookmark $bookmark)
     {
+        Gate::authorize('viewOrModify', $bookmark);
         $bookmark->delete();
         $type_exists = Bookmark::where('type', $bookmark->type)->exists();
 
@@ -95,6 +103,6 @@ class BookmarkController extends Controller
             return redirect("/bookmarks/$bookmark->type");
         }
 
-        return redirect('/');
+        return redirect('/bookmarks');
     }
 }

@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100 shadow-sm">
+<div class="navbar bg-base-200">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -11,15 +11,27 @@
         <li><a href="/bookmarks/create">New Bookmark</a></li>
       </ul>
     </div>
-    <a class="btn btn-ghost text-xl" href="/">booky</a>
+    <a class="btn btn-ghost text-xl" href="/">booky.</a>
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
         <li><a href="/bookmarks">Home</a></li>
         <li><a href="/bookmarks/create">Create Bookmark</a></li>
+        @can('view-admin')<li><a href="/admin">Admin</a></li>@endcan
     </ul>
   </div>
-  <div class="navbar-end">
-    <a class="btn">Login</a>
+  <div class="navbar-end gap-2 mr-2">
+    @guest
+        <a class="btn btn-primary" href="/register">Register</a>
+        <a class="btn btn-secondary" href="/login">Login</a>
+    @endguest
+
+    @auth
+        <form method="POST" action="/logout">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-ghost mr-2">Log Out</button>
+        </form>
+    @endauth
   </div>
 </div>

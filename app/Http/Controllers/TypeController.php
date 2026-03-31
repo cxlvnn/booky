@@ -9,7 +9,7 @@ class TypeController extends Controller
 {
     public function destroy($type)
     {
-        $bookmarks = Bookmark::where('type', $type)->delete();
-        return redirect('/');
+        Bookmark::where('type', $type)->delete();
+        return redirect('/bookmarks');
     }
 }

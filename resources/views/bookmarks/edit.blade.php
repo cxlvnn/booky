@@ -38,7 +38,7 @@
             <div>
                 <label class="label text-lg my-2 font-medium block">Bookmark URL</label>
                 <input
-                    class="input w-full px-4 focus:border-transparent"
+                    class="input w-full px-4 focus:border-transparent @error('url') input-error @enderror"
                     type="text"
                     name="url"
                     placeholder="ex. https://example.com "

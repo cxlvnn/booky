@@ -1,6 +1,6 @@
 <x-layout>
 <div class="grid grid-cols-3 items-center">
-    <span class="pl-3"><a href="/"> <- </a></span>
+    <span class="pl-3"><a href="/bookmarks"> <- </a></span>
     <h1 class="text-xl text-center col-span-1">{{ $bookmarks->first()->type ?? 'No bookmarks found' }}</h1>
     <div></div>
 </div>
