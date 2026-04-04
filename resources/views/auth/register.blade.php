@@ -27,7 +27,7 @@
         placeholder="Password" requied/>
         <x-error name="password"/>
 
-        <button class="btn btn-neutral mt-4">Sign Up</button>
+        <button class="btn btn-neutral mt-4" data-test="register-button">Sign Up</button>
     </fieldset>
 </form>
 </x-layout>

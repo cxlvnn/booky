@@ -11,7 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 
 Route::get('/', function () {
-    return 'thats weird';
+    return view('welcome.index');
 });
 
 Route::middleware('auth')->group(function () {
